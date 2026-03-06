@@ -43,7 +43,11 @@ def register():
         if existing_user:
             return "User already exists!"
 
-        new_user = User(username=username, password=password)
+        if username == "admin":
+            role = "admin"
+        else:
+            role = "user"
+        new_user = User(username=username, password=password, role=role)
         db.session.add(new_user)
         db.session.commit()
 
@@ -67,6 +71,8 @@ def login():
 
         if user and check_password_hash(user.password, password):
             login_user(user)
+            if user.role == "admin":
+                return redirect(url_for("admin_dashboard"))
 
             next_page = request.args.get("next")
             return redirect(next_page or url_for("dashboard"))
@@ -127,7 +133,11 @@ def analyze():
         "year_sold": year_sold
     }
 
-    predicted_price = predict_price(property_data)
+    predicted_price_usd = predict_price(property_data)
+    USD_TO_INR = 83   # conversion rate
+    predicted_price = predicted_price_usd * USD_TO_INR
+     
+
 
 
     # =============================
@@ -204,6 +214,44 @@ def dashboard():
 def analysis_form():
     return render_template("index.html")
 
+@app.route("/admin")
+@login_required
+def admin_dashboard():
+
+    if current_user.role != "admin":
+        return "Access Denied"
+
+    total_users = User.query.count()
+    total_analysis = Analysis.query.count()
+
+    analyses = Analysis.query.all()
+
+    # ROI list for chart
+    roi_list = [a.roi for a in analyses]
+
+    # Predicted price list for chart
+    price_list = [a.predicted_price for a in analyses]
+
+    # Risk distribution
+    risk_counts = {
+        "Low": 0,
+        "Medium": 0,
+        "High": 0
+    }
+
+    for a in analyses:
+        if a.risk_level in risk_counts:
+            risk_counts[a.risk_level] += 1
+
+    return render_template(
+        "admin_dashboard.html",
+        total_users=total_users,
+        total_analysis=total_analysis,
+        analyses=analyses,
+        roi_list=roi_list,
+        price_list=price_list,
+        risk_counts=risk_counts
+    )
 
 if __name__ == "__main__":
     app.run(debug=True,port=5001)
