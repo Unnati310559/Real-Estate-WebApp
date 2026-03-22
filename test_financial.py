@@ -1,20 +1,28 @@
 from services.financial import calculate_noi, calculate_cap_rate, calculate_cashflow, calculate_roi, calculate_irr
 
-# Sample Inputs
-purchase_price = 400000
-annual_rent = 36000
-annual_expenses = 10000
-annual_loan_payment = 15000
-years = 5
 
-noi = calculate_noi(annual_rent, annual_expenses)
-cap_rate = calculate_cap_rate(noi, purchase_price)
-cashflow = calculate_cashflow(annual_rent, annual_expenses, annual_loan_payment)
-roi = calculate_roi(cashflow * years, purchase_price)
-irr = calculate_irr(purchase_price, cashflow, years)
+def test_noi():
+    assert calculate_noi(36000, 10000) == 26000
 
-print("NOI:", noi)
-print("Cap Rate:", cap_rate)
-print("Annual Cashflow:", cashflow)
-print("ROI:", roi)
-print("IRR:", irr)
+
+def test_cap_rate():
+    noi = 26000
+    price = 400000
+    assert round(calculate_cap_rate(noi, price), 2) == round((26000/400000)*100, 2)
+
+
+def test_cashflow():
+    assert calculate_cashflow(36000, 10000, 15000) == 11000
+
+
+def test_roi():
+    cashflow = 11000
+    years = 5
+    price = 400000
+    expected = (cashflow * years / price) * 100
+    assert round(calculate_roi(cashflow * years, price), 2) == round(expected, 2)
+
+
+def test_irr():
+    irr = calculate_irr(400000, 11000, 5)
+    assert irr is not None

@@ -102,6 +102,15 @@ def analyze():
     # GET USER INPUT
     # =============================
 
+    if float(request.form["annual_rent"]) <= 0:
+       return "Invalid rent"
+
+    if float(request.form["expenses"]) < 0:
+       return "Invalid expenses"
+
+    if int(request.form["years"]) <= 0:
+       return "Invalid years"
+
     bedrooms = int(request.form["bedrooms"])
     bathrooms = float(request.form["bathrooms"])
     sqft_living = int(request.form["sqft_living"])
@@ -116,6 +125,8 @@ def analyze():
     annual_expenses = float(request.form["annual_expenses"])
     annual_loan_payment = float(request.form["annual_loan_payment"])
     years = int(request.form["years"])
+
+    
 
 
     # =============================
