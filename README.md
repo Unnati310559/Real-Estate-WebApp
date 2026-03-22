@@ -37,18 +37,19 @@ This project combines predictive analytics, financial modeling, and AI decision-
 flowchart TD
 
 A[User Input] --> B[ML Price Prediction]
-B --> C[Financial Analysis (ROI, IRR, NOI)]
-C --> D[Risk Simulation (Monte Carlo)]
+B --> C[Financial Analysis - ROI IRR NOI]
+C --> D[Risk Simulation - Monte Carlo]
 D --> E[AI Investment Score]
-E --> F[Recommendation (BUY / HOLD / AVOID)]
+E --> F[Recommendation - BUY HOLD AVOID]
 
 F --> G[User Dashboard]
 F --> H[Admin Dashboard]
 
 G --> I[Store Data in Database]
 H --> I
----
 
+---
+```
 ## ⚙️ Installation & Setup
 
 ### 1️⃣ Clone the repository
