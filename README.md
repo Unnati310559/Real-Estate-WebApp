@@ -47,7 +47,7 @@ F --> H[Admin Dashboard]
 
 G --> I[Store Data in Database]
 H --> I
-```
+---
 
 ## ⚙️ Installation & Setup
 
