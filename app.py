@@ -6,6 +6,7 @@ from services.recommendation import generate_recommendation
 from database import db, User, Analysis
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from services.investment_score import calculate_investment_score
 
 app = Flask(__name__,template_folder='templates')
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -136,7 +137,8 @@ def analyze():
     predicted_price_usd = predict_price(property_data)
     USD_TO_INR = 83   # conversion rate
     predicted_price = predicted_price_usd * USD_TO_INR
-     
+     # Suggested rent based on 8% rental yield
+    suggested_rent = predicted_price * 0.08
 
 
 
@@ -161,6 +163,11 @@ def analyze():
 
     simulated = monte_carlo_simulation(roi / 100, 0.05)
     risk_result = calculate_risk_score(simulated)
+    investment_score = calculate_investment_score(
+    roi,
+    irr,
+    risk_result["risk_level"]
+)
 
     recommendation = generate_recommendation(
         roi,
@@ -200,7 +207,9 @@ def analyze():
         irr=irr,
         risk=risk_result,
         simulated_returns=simulated.tolist() if hasattr(simulated, "tolist") else simulated,
-        recommendation=recommendation
+        recommendation=recommendation,
+        investment_score=investment_score,
+        suggested_rent=suggested_rent
     )
 @app.route("/dashboard")
 @login_required
