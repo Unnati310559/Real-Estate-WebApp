@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Properties{% endblock %}
+
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+/* CARD */
+.card {
+    background: #2a2a40;
+    color: white;
+    border: none;
+    border-radius: 12px;
+}
+
+/* LABELS */
+label {
+    color: #ccc;
+}
+
+/* INPUT */
+.form-control {
+    background: #1e1e2f;
+    border: 1px solid #444;
+    color: white;
+}
+
+.form-control:focus {
+    background: #1e1e2f;
+    color: white;
+    border-color: #7f00ff;
+    box-shadow: none;
+}
+
+/* HEADINGS */
+h2, h4, h5, h6 {
+    color: white;
+}
+
+/* BUTTON */
+.btn-dark {
+    background: linear-gradient(45deg, #7f00ff, #e100ff);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+}
+
+/* RESULT */
+.result-card {
+    margin-top: 40px;
+}
+
+/* VS */
+.vs-box {
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+}
+
+/* WINNER */
+.winner-box {
+    font-size: 18px;
+}
+
+/* ALERT FIX */
+.alert-success {
+    background: #1e3d2f;
+    color: #00ffae;
+    border: none;
+}
+</style>
+
+<div class="container mt-5">
+
+    <div class="card p-4">
+
+        <h2 class="text-center mb-4">🏠 Property Comparison Tool</h2>
+
+        <div class="row">
+
+            <!-- PROPERTY A -->
+            <div class="col-md-6">
+                <h4 class="mb-3" style="color:#7f00ff;">Property A</h4>
+
+                <label>Bedrooms</label>
+                <input type="number" id="a_bed" class="form-control mb-2">
+
+                <label>Bathrooms</label>
+                <input type="number" step="0.1" id="a_bath" class="form-control mb-2">
+
+                <label>Sqft Living</label>
+                <input type="number" id="a_sqft" class="form-control mb-2">
+
+                <label>Grade</label>
+                <input type="number" id="a_grade" class="form-control mb-2">
+
+                <label>Condition</label>
+                <input type="number" id="a_condition" class="form-control mb-2">
+
+                <label>Year Built</label>
+                <input type="number" id="a_year" class="form-control mb-2">
+
+                <label>Year Sold</label>
+                <input type="number" id="a_sold" class="form-control mb-2">
+
+                <label>Latitude</label>
+                <input type="text" id="a_lat" class="form-control mb-2">
+
+                <label>Longitude</label>
+                <input type="text" id="a_long" class="form-control mb-2">
+
+                <label>Annual Rent (₹)</label>
+                <input type="number" id="a_rent" class="form-control mb-2">
+
+                <label>Annual Expenses (₹)</label>
+                <input type="number" id="a_exp" class="form-control mb-2">
+
+                <label>Annual Loan</label>
+                <input type="number" id="a_loan" class="form-control mb-2">
+
+                <label>Years</label>
+                <input type="number" id="a_years" class="form-control mb-2">
+            </div>
+
+            <!-- PROPERTY B -->
+            <div class="col-md-6">
+                <h4 class="mb-3" style="color:#00c6ff;">Property B</h4>
+
+                <label>Bedrooms</label>
+                <input type="number" id="b_bed" class="form-control mb-2">
+
+                <label>Bathrooms</label>
+                <input type="number" step="0.1" id="b_bath" class="form-control mb-2">
+
+                <label>Sqft Living</label>
+                <input type="number" id="b_sqft" class="form-control mb-2">
+
+                <label>Grade</label>
+                <input type="number" id="b_grade" class="form-control mb-2">
+
+                <label>Condition</label>
+                <input type="number" id="b_condition" class="form-control mb-2">
+
+                <label>Year Built</label>
+                <input type="number" id="b_year" class="form-control mb-2">
+
+                <label>Year Sold</label>
+                <input type="number" id="b_sold" class="form-control mb-2">
+
+                <label>Latitude</label>
+                <input type="text" id="b_lat" class="form-control mb-2">
+
+                <label>Longitude</label>
+                <input type="text" id="b_long" class="form-control mb-2">
+
+                <label>Annual Rent (₹)</label>
+                <input type="number" id="b_rent" class="form-control mb-2">
+
+                <label>Annual Expenses (₹)</label>
+                <input type="number" id="b_exp" class="form-control mb-2">
+
+                <label>Annual Loan</label>
+                <input type="number" id="b_loan" class="form-control mb-2">
+
+                <label>Years</label>
+                <input type="number" id="b_years" class="form-control mb-2">
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <button onclick="compare()" class="btn btn-dark btn-lg">
+                Compare Now
+            </button>
+        </div>
+
+    </div>
+
+    <!-- RESULT -->
+    <div id="result" class="result-card"></div>
+
+</div>
+
+<script>
+async function compare() {
+
+    const data = {
+        property1: {
+            bedrooms: +a_bed.value,
+            bathrooms: +a_bath.value,
+            sqft_living: +a_sqft.value,
+            grade: +a_grade.value,
+            condition: +a_condition.value,
+            yr_built: +a_year.value,
+            year_sold: +a_sold.value,
+            lat: +a_lat.value,
+            long: +a_long.value,
+            rent: +a_rent.value,
+            expenses: +a_exp.value,
+            loan: +a_loan.value,
+            years: +a_years.value
+        },
+        property2: {
+            bedrooms: +b_bed.value,
+            bathrooms: +b_bath.value,
+            sqft_living: +b_sqft.value,
+            grade: +b_grade.value,
+            condition: +b_condition.value,
+            yr_built: +b_year.value,
+            year_sold: +b_sold.value,
+            lat: +b_lat.value,
+            long: +b_long.value,
+            rent: +b_rent.value,
+            expenses: +b_exp.value,
+            loan: +b_loan.value,
+            years: +b_years.value
+        }
+    };
+
+    const res = await fetch("/api/compare", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    document.getElementById("result").innerHTML = `
+    <div class="card p-4">
+
+        <h4 class="text-center mb-4">📊 Comparison Result</h4>
+
+        <div class="row text-center">
+
+            <div class="col-md-5">
+                <div class="card p-3">
+                    <h5 style="color:#7f00ff;">Property A</h5>
+                    <p>₹ ${result.property1.price}</p>
+                    <p>ROI: ${result.property1.roi}%</p>
+                    <p>IRR: ${result.property1.irr}%</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <div class="vs-box">VS</div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card p-3">
+                    <h5 style="color:#00c6ff;">Property B</h5>
+                    <p>₹ ${result.property2.price}</p>
+                    <p>ROI: ${result.property2.roi}%</p>
+                    <p>IRR: ${result.property2.irr}%</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <div class="alert alert-success winner-box">
+                🏆 Best: ${result.property1.roi > result.property2.roi ? "Property A" : "Property B"}
+            </div>
+        </div>
+
+    </div>
+    `;
+}
+</script>
+
+{% endblock %}

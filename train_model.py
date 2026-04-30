@@ -15,7 +15,7 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 # LOAD DATASET
 # =========================================
 
-df = pd.read_csv("kc_house_data.csv")
+df = pd.read_csv("kc_house_data(1).csv")
 
 print("Dataset Loaded Successfully")
 print("Shape:", df.shape)
