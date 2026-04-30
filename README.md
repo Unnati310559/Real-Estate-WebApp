@@ -1,94 +1,90 @@
 # 🏡 Real Estate Investment Analysis Tool
 
-An AI-powered web application that helps users analyze real estate investments using machine learning, financial metrics, and risk simulations.
+An AI-powered web application that helps users analyze real estate investments using machine learning, financial metrics, risk simulations, and intelligent recommendations.
 
 ---
 
 ## 🚀 Overview
 
-This project combines predictive analytics, financial modeling, and AI decision-making to assist users in making smarter real estate investment decisions.
+This system helps users make smarter property investment decisions by combining:
+- Machine Learning predictions
+- Financial analysis
+- Risk evaluation
+- AI-based assistance
+
+It also includes advanced features like chatbot support, market trends visualization, and property comparison.
 
 ---
 
 ## ✨ Features
 
-- Property price prediction using Machine Learning  
-- ROI, IRR, NOI, and Cashflow calculations  
-- Monte Carlo risk analysis  
-- AI-based investment score  
-- Smart recommendation system (BUY / HOLD / AVOID)  
-- Admin dashboard with analytics  
+- 🧠 Property Price Prediction (Machine Learning)
+- 💰 ROI, IRR, NOI, Cashflow Calculation
+- ⚠️ Monte Carlo Risk Analysis
+- 🤖 AI Investment Score
+- 📊 Market Trend Visualization
+- 🏘️ Property Comparison Tool
+- 💡 Smart Recommendation (BUY / HOLD / AVOID)
+- 💬 AI Chatbot Assistance
+- 📁 User Dashboard (history tracking)
+- 🛠️ Admin Dashboard
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Backend: Flask, Python  
-- ML: Scikit-learn, Pandas, NumPy  
-- Frontend: HTML, CSS, Bootstrap, JavaScript  
-- Charts: Chart.js  
-- Database: SQLite  
+**Frontend:**
+- HTML, CSS, Bootstrap, JavaScript
+
+**Backend:**
+- Python (Flask)
+
+**Machine Learning:**
+- Scikit-learn, Pandas, NumPy
+
+**Visualization:**
+- Chart.js / Plotly
+
+**Database:**
+- SQLite
+
+**AI Integration:**
+- Groq API (Chatbot)
 
 ---
 
 ## 📊 System Workflow
 
-```mermaid
-flowchart TD
+1. User enters property details  
+2. ML model predicts property price  
+3. Financial metrics are calculated  
+4. Risk analysis using Monte Carlo simulation  
+5. AI generates investment score  
+6. Recommendation is provided  
+7. Market trends & comparisons displayed  
+8. Chatbot assists user  
+9. Data stored in database  
 
-A[User Input] --> B[ML Price Prediction]
-B --> C[Financial Analysis - ROI IRR NOI]
-C --> D[Risk Simulation - Monte Carlo]
-D --> E[AI Investment Score]
-E --> F[Recommendation - BUY HOLD AVOID]
-
-F --> G[User Dashboard]
-F --> H[Admin Dashboard]
-
-G --> I[Store Data in Database]
-H --> I
-```
+---
 
 ## ⚙️ Installation & Setup
 
-### 1️⃣ Clone the repository
-
-```
+### 1. Clone Repository
 git clone https://github.com/Unnati310559/Real-Estate-WebApp.git
-
 cd Real-Estate-WebApp
-```
 
-### 2️⃣ Install dependencies
 
-```
+### 2. Install Requirements
 pip install -r requirements.txt
 
-```
 
-### 3️⃣ Run the application
-```
-
+### 3. Run Application
 python app.py
 
-```
 
-### 4️⃣ Open in browser
-```
-
+### 4. Open Browser
 http://127.0.0.1:5001
 
-```
-
-## 📌 Project Workflow Explanation
-
-1. User enters property and financial details  
-2. Machine Learning model predicts property price  
-3. Financial metrics (ROI, IRR, NOI, Cashflow) are calculated  
-4. Risk is analyzed using Monte Carlo simulation  
-5. AI generates an investment score  
-6. System provides recommendation (BUY / HOLD / AVOID)  
-7. Data is stored and displayed on dashboard  
 
 ---
 
@@ -96,25 +92,25 @@ http://127.0.0.1:5001
 
 - Password hashing  
 - Session-based authentication  
-- Basic input validation  
+- Input validation  
 
 ---
 
 ## ⚠️ Limitations
 
-- Uses US housing dataset (King County)  
-- Rent values are user-provided  
-- No real-time market integration  
+- Static dataset (no real-time API)
+- Rent values are user-provided
+- Limited dataset scope
 
 ---
 
-## 🚀 Future Improvements
+## 🚀 Future Scope
 
-- Property comparison tool  
-- Market trend prediction  
-- Portfolio analysis  
-- Email notifications  
-- Multi-language support  
+- Real-time property APIs  
+- Mobile application  
+- Portfolio management  
+- Advanced AI recommendations  
+- Notifications system  
 
 ---
 
@@ -126,11 +122,14 @@ http://127.0.0.1:5001
 
 ---
 
-## 📌 Status
+## 📌 Project Status
 
 ✔ MVP Complete  
-✔ Beta Ready  
+✔ Beta Version Ready  
+✔ Chatbot, Trends & Comparison Integrated  
 
 ---
 
-## ⭐ If you like this project, give it a star!
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
