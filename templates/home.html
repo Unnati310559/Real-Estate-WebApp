@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Real Estate Investment Analyzer</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    color: white;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 60px;
+    background: linear-gradient(90deg, #1e1e2f, #2a2a40);
+}
+
+.navbar a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    padding: 10px 22px;   /* BIGGER */
+    border-radius: 25px;
+    font-weight: 500;
+    background: #7f00ff;  /* SAME COLOR */
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    background: white;
+    color: #1e1e2f;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 110px 20px;
+    background: linear-gradient(120deg, #7f00ff, #e100ff);
+}
+
+.hero h1 {
+    font-size: 46px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-top: 10px;
+    opacity: 0.9;
+}
+
+.btn {
+    margin-top: 25px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    background: white;
+    color: #7f00ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background: #1e1e2f;
+    color: white;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 70px 40px;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    width: 260px;
+    border-radius: 15px;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+    transform: translateY(-12px) scale(1.03);
+    background: rgba(255,255,255,0.15);
+}
+
+/* 🤖 BUTTON */
+.ai-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(45deg, #7f00ff, #e100ff);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* CHAT */
+.chat-popup {
+    display: none;
+    position: fixed;
+    bottom: 110px;
+    right: 25px;
+    width: 320px;
+    height: 420px;
+    background: #2a2a40;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: linear-gradient(45deg, #7f00ff, #e100ff);
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+}
+
+.chat-body {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    font-size: 14px;
+}
+
+.chat-footer {
+    display: flex;
+    border-top: 1px solid #444;
+}
+
+.chat-footer input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #1e1e2f;
+    color: white;
+}
+
+.chat-footer button {
+    background: #7f00ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🏠 RealEstate AI</h2>
+    <div>
+        {% if current_user.is_authenticated %}
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Smart Real Estate Investment</h1>
+    <p>Predict prices, calculate ROI, analyze risk & invest smarter with AI</p>
+    <a href="/login" class="btn">Get Started</a>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+
+    <div class="card">
+        <h3>📈 Price Prediction</h3>
+        <p>AI-based property value estimation.</p>
+    </div>
+
+    <div class="card">
+        <h3>💰 ROI & IRR</h3>
+        <p>Advanced financial insights.</p>
+    </div>
+
+    <div class="card">
+        <h3>⚠ Risk Analysis</h3>
+        <p>Monte Carlo risk evaluation.</p>
+    </div>
+
+    <div class="card">
+        <h3>📊 Market Trends</h3>
+        <p>Visualize property trends using charts.</p>
+    </div>
+
+    <div class="card">
+        <h3>🏘 Property Comparison</h3>
+        <p>Compare multiple properties easily.</p>
+    </div>
+
+</div>
+
+<!-- 🤖 BUTTON -->
+<div class="ai-button" onclick="toggleChat()">🤖</div>
+
+<!-- CHAT -->
+<div class="chat-popup" id="chatBox">
+    <div class="chat-header">
+        AI Assistant
+        <span style="float:right;cursor:pointer;" onclick="toggleChat()">✖</span>
+    </div>
+
+    <div class="chat-body" id="chatBody"></div>
+
+    <div class="chat-footer">
+        <input type="text" id="userInput" placeholder="Ask something...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+function toggleChat() {
+    let box = document.getElementById("chatBox");
+    box.style.display = box.style.display === "flex" ? "none" : "flex";
+}
+
+async function sendMessage() {
+    let input = document.getElementById("userInput");
+    let msg = input.value;
+    if (!msg) return;
+
+    let chat = document.getElementById("chatBody");
+
+    chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
+    input.value = "";
+
+    let res = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: msg})
+    });
+
+    let data = await res.json();
+
+    chat.innerHTML += `<p><b>AI:</b> ${data.response}</p>`;
+    chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>
